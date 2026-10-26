@@ -19,6 +19,9 @@ jobs:
       - name: Install and configure Poetry
         uses: snok/install-poetry@v1
 
+      - name: Show pip
+        run: pip list
+
     #   - name: Install Poetry
     #     run: |
     #       pipx install poetry
