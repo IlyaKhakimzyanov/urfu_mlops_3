@@ -10,3 +10,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+
+      - name: Setup cache for Poetry
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      # зависимости проекта
+      - name: Install dependencies
+        run: poetry install --no-interaction
+
+      # тесты
+      - name: Run tests
+        run: poetry run pytest
